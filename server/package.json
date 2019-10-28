@@ -2,7 +2,16 @@
   "name": "server",
   "description": "Backend created with GraphQL",
   "private": true,
-  "dependencies": {},
+  "scripts": {
+    "dev": "nodemon src/server.js"
+  },
+  "dependencies": {
+    "apollo-server": "^2.9.7",
+    "dotenv": "^8.2.0",
+    "graphql": "^14.5.8",
+    "graphql-iso-date": "^3.6.1",
+    "mongoose": "^5.7.7"
+  },
   "devDependencies": {
     "eslint": "^6.6.0",
     "eslint-config-airbnb-base": "^14.0.0",
