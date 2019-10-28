@@ -1,5 +1,13 @@
-import React from "react";
+import React from 'react';
+
+import GlobalStyle from './styles/global';
 
 export default function App() {
-  return <h1>Rocketseat</h1>;
+  return (
+    <>
+      <GlobalStyle />
+
+      <h1>Rocketvotes</h1>
+    </>
+  );
 }
