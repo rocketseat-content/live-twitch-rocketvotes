@@ -1,5 +1,7 @@
 import React from 'react';
+import { ApolloProvider } from '@apollo/react-hooks';
 
+import api from './services/api';
 import GlobalStyle from './styles/global';
 
 import Layout from './components/Layout';
@@ -12,14 +14,16 @@ export default function App() {
     <>
       <GlobalStyle />
 
-      <Layout>
-        <Header />
+      <ApolloProvider client={api}>
+        <Layout>
+          <Header />
 
-        <main>
-          <SuggestTopic />
-          <TopicList />
-        </main>
-      </Layout>
+          <main>
+            <SuggestTopic />
+            <TopicList />
+          </main>
+        </Layout>
+      </ApolloProvider>
     </>
   );
 }
