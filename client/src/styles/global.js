@@ -18,6 +18,10 @@ export default createGlobalStyle`
     height: 100%;
   }
 
+  body {
+    background: #282a36;
+  }
+
   *, input, button {
     font: 14px 'Roboto', sans-serif;
   }
