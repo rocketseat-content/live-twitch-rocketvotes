@@ -9,20 +9,7 @@ export default styled.div`
   main {
     height: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: flex-start;
-  }
-`;
-
-export const Topics = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  flex-direction: column;
-
-  > section {
-    & + section {
-      margin-top: 30px;
-    }
   }
 `;
