@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, TextInput, TextArea, Button } from './styles';
+import { Container, Form, TextInput, TextArea, Button } from './styles';
 
 export default function SuggestTopic() {
   return (
@@ -8,8 +8,10 @@ export default function SuggestTopic() {
       <h2>Sugerir um tópico</h2>
       <p>Antes de sugerir um tópico, verifique se ele já não existe.</p>
 
-      <TextInput type="text" placeholder="Título" />
-      <TextArea placeholder="Detalhes" />
+      <Form>
+        <TextInput type="text" placeholder="Título" />
+        <TextArea placeholder="Detalhes" />
+      </Form>
 
       <Button>Cadastrar tópico</Button>
     </Container>

@@ -1,5 +1,7 @@
-import { queries } from './topics';
+import { queries as topicQueries } from './topics';
+import { queries as userQueries } from './users';
 
 export default {
-  ...queries
+  ...topicQueries,
+  ...userQueries
 };

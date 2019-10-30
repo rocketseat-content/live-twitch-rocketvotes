@@ -29,6 +29,10 @@ export const Container = styled.div`
   }
 `;
 
+export const Form = styled.form`
+  width: 100%;
+`;
+
 export const TextInput = styled.input`
   background: #1a1b23;
   color: #fff;
@@ -36,6 +40,7 @@ export const TextInput = styled.input`
   padding: 20px;
   border: 1px solid #393c4d;
   border-radius: 8px;
+  width: 100%;
 
   margin-bottom: 10px;
 
@@ -49,7 +54,11 @@ export const TextInput = styled.input`
 `;
 
 export const TextArea = styled.textarea`
-  height: 220px;
+  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
+  min-height: 220px;
+  max-height: 220px;
 
   background: #1a1b23;
   color: #fff;

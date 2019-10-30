@@ -1,12 +1,7 @@
-import {
-  GraphQLList,
-  GraphQLInputObjectType,
-  GraphQLString,
-  GraphQLInt
-} from 'graphql';
+import { GraphQLList, GraphQLInputObjectType, GraphQLString } from 'graphql';
 
 import TopicType from './TopicType';
-import { getTopics, saveTopic } from './TopicLoader';
+import { getTopics, saveTopic, updateTopic } from './TopicLoader';
 
 export const queries = {
   getTopics: {
@@ -30,12 +25,31 @@ export const mutations = {
               type: GraphQLString
             },
             votes: {
-              type: GraphQLInt
+              type: GraphQLList(GraphQLString),
+              defaultValue: []
             }
           }
         })
       }
     },
     resolve: saveTopic
+  },
+  voteTopic: {
+    type: TopicType,
+    args: {
+      input: {
+        type: new GraphQLInputObjectType({
+          name: 'TopicVote',
+          fields: {
+            token: {
+              type: GraphQLString
+            },
+            topicId: {
+              type: GraphQLString
+            }
+          }
+        })
+      }
+    }
   }
 };

@@ -1,5 +1,7 @@
-import { mutations } from './topics';
+import { mutations as topicMutations } from './topics';
+import { mutations as userMutations } from './users';
 
 export default {
-  ...mutations
+  ...topicMutations,
+  ...userMutations
 };

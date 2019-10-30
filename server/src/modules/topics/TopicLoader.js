@@ -12,7 +12,18 @@ export async function saveTopic(_, { input }) {
   return topic;
 }
 
+export async function updateTopic(_, { input }) {
+  const { id, votes } = input;
+
+  const topic = await Topic.findByIdAndUpdate(id, {
+    votes
+  });
+
+  return topic;
+}
+
 export async function getTopics() {
   const topics = await Topic.find();
+
   return topics;
 }

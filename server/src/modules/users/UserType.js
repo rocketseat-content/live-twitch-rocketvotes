@@ -1,25 +1,20 @@
-import {
-  GraphQLObjectType,
-  GraphQLString,
-  GraphQLList,
-  GraphQLNonNull
-} from 'graphql';
+import { GraphQLObjectType, GraphQLString, GraphQLNonNull } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
 export default new GraphQLObjectType({
-  name: 'Topic',
+  name: 'User',
   fields: {
     id: {
+      type: GraphQLNonNull(GraphQLString)
+    },
+    githubId: {
       type: GraphQLNonNull(GraphQLString)
     },
     name: {
       type: GraphQLNonNull(GraphQLString)
     },
-    description: {
+    email: {
       type: GraphQLNonNull(GraphQLString)
-    },
-    votes: {
-      type: GraphQLNonNull(GraphQLList(GraphQLString))
     },
     createdAt: {
       type: GraphQLNonNull(GraphQLDateTime)

@@ -1,29 +1,20 @@
 import React from 'react';
 import { ApolloProvider } from '@apollo/react-hooks';
+import { ToastContainer } from 'react-toastify';
+import { BrowserRouter as Router } from 'react-router-dom';
 
-import api from './services/api';
+import client from './services/client';
 import GlobalStyle from './styles/global';
-
-import Layout from './components/Layout';
-import Header from './components/Header';
-import SuggestTopic from './components/SuggestTopic';
-import TopicList from './components/TopicList';
+import Routes from './routes';
 
 export default function App() {
   return (
-    <>
-      <GlobalStyle />
-
-      <ApolloProvider client={api}>
-        <Layout>
-          <Header />
-
-          <main>
-            <SuggestTopic />
-            <TopicList />
-          </main>
-        </Layout>
-      </ApolloProvider>
-    </>
+    <ApolloProvider client={client}>
+      <Router>
+        <Routes />
+        <GlobalStyle />
+        <ToastContainer />
+      </Router>
+    </ApolloProvider>
   );
 }

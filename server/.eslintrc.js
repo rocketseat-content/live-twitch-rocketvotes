@@ -18,6 +18,7 @@ module.exports = {
     'class-methods-use-this': 'off',
     'no-param-reassign': 'off',
     camelcase: 'off',
+    'import/prefer-default-export': 'off',
     'no-unused-vars': ['error', { argsIgnorePattern: 'next' }]
   }
 };
