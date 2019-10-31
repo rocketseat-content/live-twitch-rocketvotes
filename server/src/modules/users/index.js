@@ -1,4 +1,4 @@
-import { GraphQLNonNull, GraphQLString } from 'graphql';
+import { GraphQLNonNull, GraphQLString, GraphQLObjectType } from 'graphql';
 
 import UserType from './UserType';
 import { getAuthorizationURL, getAccessToken, getUser } from './UserLoader';
@@ -9,7 +9,20 @@ export const queries = {
     resolve: getAuthorizationURL
   },
   getAccessToken: {
-    type: GraphQLNonNull(GraphQLString),
+    type: new GraphQLObjectType({
+      name: 'TokenType',
+      fields: {
+        access_token: {
+          type: GraphQLNonNull(GraphQLString)
+        },
+        token_type: {
+          type: GraphQLNonNull(GraphQLString)
+        },
+        scope: {
+          type: GraphQLNonNull(GraphQLString)
+        }
+      }
+    }),
     args: {
       code: { type: GraphQLString }
     },

@@ -21,7 +21,9 @@ class GitHubAuthService {
       '/access_token',
       {},
       {
-        data: {},
+        headers: {
+          Accept: 'application/json'
+        },
         params: {
           client_id: githubConfig.clientId,
           client_secret: githubConfig.clientSecret,

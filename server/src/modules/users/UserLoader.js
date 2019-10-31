@@ -30,7 +30,5 @@ export async function getUser(_, { token }) {
     });
   }
 
-  console.log(user);
-
   return user;
 }
