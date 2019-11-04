@@ -4,7 +4,7 @@
 ## Todo
 
 - [x] Create back-end structure;
-- [ ] Authentication (Github OAuth);
+- [x] Authentication (Github OAuth);
 - [x] Store users on database;
 - [x] Store topics on database;
 - [x] Create web interface;
