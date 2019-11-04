@@ -3,12 +3,14 @@ import { ApolloServer } from 'apollo-server';
 import mongoose from 'mongoose';
 
 import schema from './schema';
+import AuthMiddleware from './middlewares/AuthMiddleware';
 
 class App {
   constructor() {
     this.server = new ApolloServer({
       schema,
-      playground: process.env.NODE_ENV === 'development'
+      playground: process.env.NODE_ENV === 'development',
+      context: AuthMiddleware
     });
 
     this.connectMongo();

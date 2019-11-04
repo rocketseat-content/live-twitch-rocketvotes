@@ -1,38 +1,22 @@
-import { GraphQLNonNull, GraphQLString, GraphQLObjectType } from 'graphql';
+import { GraphQLNonNull, GraphQLString } from 'graphql';
 
+import { getAuthorizationURL, getBearerToken, getUser } from './UserLoader';
 import UserType from './UserType';
-import { getAuthorizationURL, getAccessToken, getUser } from './UserLoader';
 
 export const queries = {
   getAuthorizationURL: {
     type: GraphQLNonNull(GraphQLString),
     resolve: getAuthorizationURL
   },
-  getAccessToken: {
-    type: new GraphQLObjectType({
-      name: 'TokenType',
-      fields: {
-        access_token: {
-          type: GraphQLNonNull(GraphQLString)
-        },
-        token_type: {
-          type: GraphQLNonNull(GraphQLString)
-        },
-        scope: {
-          type: GraphQLNonNull(GraphQLString)
-        }
-      }
-    }),
+  getBearerToken: {
+    type: GraphQLNonNull(GraphQLString),
     args: {
-      code: { type: GraphQLString }
+      githubCode: { type: GraphQLString }
     },
-    resolve: getAccessToken
+    resolve: getBearerToken
   },
   getUser: {
     type: UserType,
-    args: {
-      token: { type: GraphQLString }
-    },
     resolve: getUser
   }
 };
