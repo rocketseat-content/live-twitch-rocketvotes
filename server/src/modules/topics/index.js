@@ -1,7 +1,7 @@
 import { GraphQLList, GraphQLInputObjectType, GraphQLString } from 'graphql';
 
 import TopicType from './TopicType';
-import { getTopics, saveTopic, updateTopic } from './TopicLoader';
+import { getTopics, createTopic, voteTopic } from './TopicLoader';
 
 export const queries = {
   getTopics: {
@@ -11,7 +11,7 @@ export const queries = {
 };
 
 export const mutations = {
-  saveTopic: {
+  createTopic: {
     type: TopicType,
     args: {
       input: {
@@ -32,24 +32,15 @@ export const mutations = {
         })
       }
     },
-    resolve: saveTopic
+    resolve: createTopic
   },
   voteTopic: {
     type: TopicType,
     args: {
-      input: {
-        type: new GraphQLInputObjectType({
-          name: 'TopicVote',
-          fields: {
-            token: {
-              type: GraphQLString
-            },
-            topicId: {
-              type: GraphQLString
-            }
-          }
-        })
+      topicId: {
+        type: GraphQLString
       }
-    }
+    },
+    resolve: voteTopic
   }
 };
