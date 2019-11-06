@@ -32,5 +32,6 @@ module.exports = {
     'react-hooks/exhaustive-deps': 'warn',
     'react/jsx-props-no-spreading': 'off',
     'react/prop-types': 'off',
+    'react/forbid-prop-types': 'off'
   },
 };
