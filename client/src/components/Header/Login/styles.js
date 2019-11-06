@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { lighten } from 'polished';
 
-export const Button = styled.button`
+export const Button = styled.a`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -11,6 +11,7 @@ export const Button = styled.button`
   background: #14151b;
   color: #fff;
   transition: all ease-in-out 200ms;
+  text-decoration: none;
 
   box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.12);
   padding: 0 2rem;
@@ -19,7 +20,7 @@ export const Button = styled.button`
   text-align: center;
 
   &:hover {
-    background: ${lighten('0.01', '#14151b')};
+    background: ${lighten('0.02', '#14151b')};
   }
 
   svg {

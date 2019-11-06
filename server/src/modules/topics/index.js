@@ -1,11 +1,48 @@
-import { GraphQLList, GraphQLInputObjectType, GraphQLString } from 'graphql';
+import {
+  GraphQLList,
+  GraphQLInputObjectType,
+  GraphQLString,
+  GraphQLInt,
+  GraphQLObjectType,
+  GraphQLNonNull
+} from 'graphql';
 
 import TopicType from './TopicType';
 import { getTopics, createTopic, voteTopic } from './TopicLoader';
 
 export const queries = {
   getTopics: {
-    type: GraphQLList(TopicType),
+    type: new GraphQLObjectType({
+      name: 'TopicList',
+      fields: {
+        topics: {
+          type: GraphQLList(TopicType)
+        },
+        total: {
+          type: GraphQLNonNull(GraphQLInt)
+        },
+        limit: {
+          type: GraphQLNonNull(GraphQLInt)
+        },
+        offset: {
+          type: GraphQLNonNull(GraphQLInt)
+        },
+        page: {
+          type: GraphQLNonNull(GraphQLInt)
+        },
+        pages: {
+          type: GraphQLNonNull(GraphQLInt)
+        }
+      }
+    }),
+    args: {
+      search: {
+        type: GraphQLString
+      },
+      page: {
+        type: GraphQLInt
+      }
+    },
     resolve: getTopics
   }
 };

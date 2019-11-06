@@ -1,15 +1,35 @@
+import { AuthenticationError } from 'apollo-server';
+
 import Topic from './TopicModel';
 
-export async function getTopics() {
-  const topics = await Topic.find();
+export async function getTopics(_, { search, page }) {
+  const conditions = {};
+  if (search) conditions.name = new RegExp(search, 'i');
 
-  return topics;
+  const perPage = 5;
+
+  const { docs, total, limit, offset, pages } = await Topic.paginate(
+    conditions,
+    {
+      limit: perPage,
+      skip: ((page || 1) - 1) * perPage
+    }
+  );
+
+  return {
+    topics: docs,
+    total,
+    limit,
+    offset,
+    page: page || 1,
+    pages
+  };
 }
 
 export async function createTopic(_, { input }, context) {
   const { githubId: userGithubId } = context;
   if (!userGithubId)
-    throw new Error('You must be logged in to create a topic!');
+    throw new AuthenticationError('You must be logged in to create a topic!');
 
   const { name, description, votes } = input;
 
@@ -24,7 +44,8 @@ export async function createTopic(_, { input }, context) {
 
 export async function voteTopic(_, { topicId }, context) {
   const { githubId: userGithubId } = context;
-  if (!userGithubId) throw new Error('You must be logged in to vote!');
+  if (!userGithubId)
+    throw new AuthenticationError('You must be logged in to vote!');
 
   const topic = await Topic.findById(topicId);
   if (!topic) throw new Error('Topic not found');

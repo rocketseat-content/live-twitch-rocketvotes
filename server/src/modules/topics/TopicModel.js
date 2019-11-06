@@ -1,4 +1,5 @@
 import { model, Schema } from 'mongoose';
+import mongoosePaginate from 'mongoose-paginate';
 
 const TopicSchema = new Schema(
   {
@@ -19,5 +20,6 @@ const TopicSchema = new Schema(
     timestamps: true
   }
 );
+TopicSchema.plugin(mongoosePaginate);
 
 export default model('Topic', TopicSchema);

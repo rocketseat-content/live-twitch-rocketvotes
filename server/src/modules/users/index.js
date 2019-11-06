@@ -1,13 +1,9 @@
 import { GraphQLNonNull, GraphQLString } from 'graphql';
 
-import { getAuthorizationURL, getBearerToken, getUser } from './UserLoader';
+import { getBearerToken, getUser } from './UserLoader';
 import UserType from './UserType';
 
 export const queries = {
-  getAuthorizationURL: {
-    type: GraphQLNonNull(GraphQLString),
-    resolve: getAuthorizationURL
-  },
   getBearerToken: {
     type: GraphQLNonNull(GraphQLString),
     args: {
