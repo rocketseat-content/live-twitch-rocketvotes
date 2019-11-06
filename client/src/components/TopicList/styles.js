@@ -6,6 +6,8 @@ export const Container = styled.div`
   align-items: flex-start;
   flex-direction: column;
   width: 100%;
+  color: #fff;
+  font-size: 16px;
 
   > section {
     & + section {
