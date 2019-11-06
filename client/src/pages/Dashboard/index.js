@@ -2,7 +2,7 @@ import React from 'react';
 
 import Layout from '../../components/Layout';
 import Header from '../../components/Header';
-import SuggestTopic from '../../components/SuggestTopic';
+import Sidebar from '../../components/Sidebar';
 import TopicList from '../../components/TopicList';
 
 export default function Home() {
@@ -11,7 +11,7 @@ export default function Home() {
       <Header />
 
       <main>
-        <SuggestTopic />
+        <Sidebar />
         <TopicList />
       </main>
     </Layout>

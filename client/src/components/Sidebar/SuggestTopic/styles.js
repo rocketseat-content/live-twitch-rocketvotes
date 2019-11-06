@@ -1,29 +1,24 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  display: flex;
-  flex-direction: column;
-  padding: 30px 20px;
-
-  background: #1f212a;
-  max-width: 350px;
-  width: 100%;
-  margin-right: 30px;
-
   border: 1px solid #393c4d;
   border-radius: 8px;
   text-align: center;
+  background: #1f212a;
+  box-shadow: 0 8px 17px 0 rgba(0, 0, 0, 0.2);
+  padding: 30px 20px;
 
   > h2 {
     color: #fff;
-    font-size: 21px;
+    font-size: 18px;
 
-    margin-bottom: 13px;
+    margin-bottom: 10px;
   }
 
   > p {
     color: #999;
-    font-size: 18px;
+    font-size: 13px;
+    line-height: 1.6;
 
     margin-bottom: 25px;
   }
@@ -45,7 +40,6 @@ export const TextInput = styled.input`
   margin-bottom: 10px;
 
   &::placeholder {
-    font-weight: bold;
     text-transform: uppercase;
 
     color: #fff;
@@ -70,7 +64,6 @@ export const TextArea = styled.textarea`
   margin-bottom: 20px;
 
   &::placeholder {
-    font-weight: bold;
     text-transform: uppercase;
 
     color: #fff;
@@ -80,9 +73,9 @@ export const TextArea = styled.textarea`
 
 export const Button = styled.button`
   color: #fff;
-  font-size: 16px;
-  font-weight: bold;
+  font-size: 14px;
   padding: 16px 0;
+  width: 100%;
 
   background: #7159c1;
 

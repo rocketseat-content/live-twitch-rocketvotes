@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
-import { FaAngleUp } from 'react-icons/fa';
+import { GoTriangleUp } from 'react-icons/go';
 import { gql } from 'apollo-boost';
 
 import { Container, Votes, Info } from './styles';
@@ -27,12 +27,12 @@ export default function Topic({ id, name, description, votes }) {
   return (
     <Container>
       <Votes>
-        <FaAngleUp size={20} color="#fff" onClick={handleVote} />
+        <GoTriangleUp size={20} color="#fff" onClick={handleVote} />
         {votes.length}
       </Votes>
       <Info>
         <h2>{name}</h2>
-        <p>{description}</p>
+        <p>{description.substring(0, 100)}...</p>
       </Info>
     </Container>
   );
