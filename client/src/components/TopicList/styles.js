@@ -13,10 +13,6 @@ export const Info = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  p {
-    color: #999;
-  }
 `;
 
 export const Container = styled.div`
@@ -33,5 +29,27 @@ export const Container = styled.div`
     & + section {
       margin-top: 30px;
     }
+  }
+`;
+
+export const Pagination = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-top: 40px;
+
+  p {
+    color: #fff;
+    margin-right: 20px;
+    font-size: 16px;
+    ${({ hasPrev }) => hasPrev && 'margin-left: 20px;'}
+  }
+
+  > button {
+    color: #999;
+    font-size: 16px;
+
+    background: none;
+    border: none;
   }
 `;

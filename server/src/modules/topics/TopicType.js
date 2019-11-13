@@ -6,6 +6,8 @@ import {
 } from 'graphql';
 import { GraphQLDateTime } from 'graphql-iso-date';
 
+import UserType from '../users/UserType';
+
 export default new GraphQLObjectType({
   name: 'Topic',
   fields: {
@@ -20,6 +22,9 @@ export default new GraphQLObjectType({
     },
     votes: {
       type: GraphQLNonNull(GraphQLList(GraphQLString))
+    },
+    author: {
+      type: GraphQLNonNull(UserType)
     },
     createdAt: {
       type: GraphQLNonNull(GraphQLDateTime)

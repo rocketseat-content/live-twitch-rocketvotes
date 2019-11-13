@@ -5,6 +5,8 @@ import mongoose from 'mongoose';
 import schema from './schema';
 import AuthMiddleware from './middlewares/AuthMiddleware';
 
+// import { userLoader } from './dataloader';
+
 class App {
   constructor() {
     this.server = new ApolloServer({

@@ -11,9 +11,8 @@ export async function getBearerToken(_, { githubCode }) {
   const { access_token: githubToken } = await GitHubAuthService.getAccessToken({
     code: githubCode
   });
-  console.log({ githubCode });
   const githubUser = await GitHubService.getUser({ token: githubToken });
-  const { id: githubId, name, email } = githubUser;
+  const { id: githubId, name, email, avatar_url: avatarUrl } = githubUser;
 
   let user = await User.findOne({ githubId });
 
@@ -21,21 +20,25 @@ export async function getBearerToken(_, { githubCode }) {
     user = await User.create({
       githubId,
       name,
-      email
+      email,
+      avatarUrl
     });
   }
 
-  return jwt.sign({ githubId }, authConfig.secret, {
+  const token = jwt.sign({ githubId }, authConfig.secret, {
     expiresIn: authConfig.expiresIn
   });
+
+  return token;
 }
 
 export async function getUser(_, __, context) {
   const { githubId } = context;
-  if (!githubId)
+  if (!githubId) {
     throw new AuthenticationError(
       'You must be logged in to request user data!'
     );
+  }
 
   const user = await User.findOne({ githubId });
 

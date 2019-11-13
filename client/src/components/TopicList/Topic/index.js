@@ -1,40 +1,58 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { useMutation } from '@apollo/react-hooks';
 import { GoTriangleUp } from 'react-icons/go';
 import { gql } from 'apollo-boost';
 
-import { Container, Votes, Info } from './styles';
+import { Container, Votes, Info, Modal } from './styles';
+import { GET_TOPICS } from '../index';
 
 const VOTE_TOPIC = gql`
-  mutation voteTopic($id: String, $votes: Int) {
-    voteTopic(input: { id: $id, votes: $votes }) {
+  mutation voteTopic($topicId: String) {
+    voteTopic(topicId: $topicId) {
       id
     }
   }
 `;
 
-export default function Topic({ id, name, description, votes }) {
-  const [saveTopic] = useMutation(VOTE_TOPIC);
+Modal.setAppElement('#root');
 
-  async function handleVote() {
-    await saveTopic({
-      variables: { id, votes: Number(votes.length + 1) },
-      refetchQueries: () => [{ query: 'getTopicList' }],
-    });
-  }
+export default function Topic({ id, name, description, votes }) {
+  const { signed } = useSelector(state => state.auth);
+
+  const [modalOpened, setModalOpened] = useState(false);
+  const [voteTopic] = useMutation(VOTE_TOPIC, {
+    variables: { topicId: id },
+  });
 
   return (
-    <Container>
-      <Votes>
-        <GoTriangleUp size={20} color="#fff" onClick={handleVote} />
-        {votes.length}
-      </Votes>
-      <Info>
-        <h2>{name}</h2>
-        <p>{description.substring(0, 100)}...</p>
-      </Info>
-    </Container>
+    <>
+      <Modal
+        isOpen={modalOpened}
+        onRequestClose={() => setModalOpened(false)}
+        contentLabel={`Informações sobre o tópico: ${name}`}
+      >
+        <button type="button" aria-label="Fechar modal">
+          x
+        </button>
+        <section>
+          <h3>{name}</h3>
+        </section>
+      </Modal>
+      <Container>
+        <Votes>
+          {signed && (
+            <GoTriangleUp size={20} color="#fff" onClick={voteTopic} />
+          )}
+          {votes.length}
+        </Votes>
+        <Info onClick={() => setModalOpened(true)}>
+          <h2>{name}</h2>
+          <p>{description.substring(0, 100)}...</p>
+        </Info>
+      </Container>
+    </>
   );
 }
 

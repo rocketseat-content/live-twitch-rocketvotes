@@ -5,14 +5,14 @@ import Header from '../../components/Header';
 import Sidebar from '../../components/Sidebar';
 import TopicList from '../../components/TopicList';
 
-export default function Home() {
+export default function Home({ history }) {
   return (
     <Layout>
       <Header />
 
       <main>
         <Sidebar />
-        <TopicList />
+        <TopicList history={history} />
       </main>
     </Layout>
   );

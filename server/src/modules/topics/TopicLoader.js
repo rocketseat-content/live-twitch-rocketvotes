@@ -1,8 +1,9 @@
 import { AuthenticationError } from 'apollo-server';
 
+import User from '../users/UserModel';
 import Topic from './TopicModel';
 
-export async function getTopics(_, { search, page }) {
+export async function getTopics(_, { search, page = 1 }) {
   const conditions = {};
   if (search) conditions.name = new RegExp(search, 'i');
 
@@ -11,8 +12,10 @@ export async function getTopics(_, { search, page }) {
   const { docs, total, limit, offset, pages } = await Topic.paginate(
     conditions,
     {
+      page: page || 1,
       limit: perPage,
-      skip: ((page || 1) - 1) * perPage
+      skip: ((page || 1) - 1) * perPage,
+      populate: 'author'
     }
   );
 
@@ -31,13 +34,19 @@ export async function createTopic(_, { input }, context) {
   if (!userGithubId)
     throw new AuthenticationError('You must be logged in to create a topic!');
 
+  const user = await User.findOne({ githubId: userGithubId });
+  if (!user) throw new AuthenticationError('User not found.');
+
   const { name, description, votes } = input;
 
   const topic = await Topic.create({
     name,
     description,
-    votes
+    votes,
+    author: user._id
   });
+
+  topic.set('author', user);
 
   return topic;
 }
@@ -51,7 +60,7 @@ export async function voteTopic(_, { topicId }, context) {
   if (!topic) throw new Error('Topic not found');
 
   let { votes } = topic;
-  if (!votes.find(githubId => githubId === userGithubId))
+  if (!votes.find(githubId => String(githubId) === String(userGithubId)))
     votes = [...votes, userGithubId];
 
   await topic.update({ votes });

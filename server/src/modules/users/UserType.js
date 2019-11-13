@@ -16,6 +16,9 @@ export default new GraphQLObjectType({
     email: {
       type: GraphQLNonNull(GraphQLString)
     },
+    avatarUrl: {
+      type: GraphQLString
+    },
     createdAt: {
       type: GraphQLNonNull(GraphQLDateTime)
     },

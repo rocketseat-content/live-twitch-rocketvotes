@@ -1,34 +1,60 @@
-import React, { useState, useMemo } from 'react';
+import React, { useMemo, useEffect } from 'react';
+import queryString from 'query-string';
 import Loader from 'react-loader-spinner';
 import { useQuery } from '@apollo/react-hooks';
 import { gql } from 'apollo-boost';
 
 import Topic from './Topic';
 
-import { Wrapper, Info, Container } from './styles';
+import { Wrapper, Info, Container, Pagination } from './styles';
 import SearchBar from './SearchBar';
 
 export const GET_TOPICS = gql`
-  query getTopicList {
-    getTopics {
+  query($page: Int, $search: String) {
+    getTopics(page: $page, search: $search) {
       topics {
         id
         name
         description
         votes
+        author {
+          name
+          email
+        }
       }
       pages
     }
   }
 `;
 
-export default function TopicList() {
-  const [page, setPage] = useState(1);
-  const { loading, data } = useQuery(GET_TOPICS, {
+export default function TopicList({ history }) {
+  const query = useMemo(() => queryString.parse(history.location.search), [
+    history.location.search,
+  ]);
+
+  const [search, page] = useMemo(() => {
+    return [query.search, Number(query.page) || 1];
+  }, [query]);
+
+  const { loading, data, refetch } = useQuery(GET_TOPICS, {
     variables: {
+      search,
       page,
     },
   });
+
+  useEffect(() => {
+    refetch();
+  }, [page, search]);
+
+  function handlePageChange(newPage) {
+    history.push({
+      search: queryString.stringify({
+        ...query,
+        page: newPage,
+      }),
+    });
+  }
 
   const { topics, pages } = useMemo(
     () =>
@@ -41,13 +67,14 @@ export default function TopicList() {
     [data]
   );
 
+  const nextPage = page + 1;
+  const prevPage = page - 1;
+  const hasPrev = page !== 1 && page <= pages;
+
   return (
     <Wrapper>
       <Info>
-        <SearchBar />
-        <p>
-          Página {page} de {pages || '?'}
-        </p>
+        <SearchBar history={history} />
       </Info>
       {loading ? (
         <Loader
@@ -58,19 +85,32 @@ export default function TopicList() {
           style={{ marginTop: '40px' }}
         />
       ) : (
-        <Container>
-          {topics.length > 0
-            ? topics.map(({ id, name, description, votes }) => (
-                <Topic
-                  key={id}
-                  id={id}
-                  name={name}
-                  description={description}
-                  votes={votes}
-                />
-              ))
-            : 'Não há tópicos cadastrados...'}
-        </Container>
+        <>
+          <Container>
+            {topics.length > 0
+              ? topics.map(({ id, name, description, votes }) => (
+                  <Topic
+                    key={id}
+                    id={id}
+                    name={name}
+                    description={description}
+                    votes={votes}
+                  />
+                ))
+              : 'Não foram encontrados tópicos...'}
+          </Container>
+          <Pagination hasPrev={hasPrev}>
+            {hasPrev && (
+              <button onClick={() => handlePageChange(prevPage)}>Prev</button>
+            )}
+            <p>
+              Page {page} of {pages || '?'}
+            </p>
+            {page >= 1 && nextPage <= pages && (
+              <button onClick={() => handlePageChange(nextPage)}>Next</button>
+            )}
+          </Pagination>
+        </>
       )}
     </Wrapper>
   );

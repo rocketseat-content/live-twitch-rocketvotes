@@ -14,6 +14,11 @@ const TopicSchema = new Schema(
     votes: {
       type: [String],
       required: true
+    },
+    author: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true
     }
   },
   {

@@ -1,30 +1,27 @@
 import React, { useEffect } from 'react';
-import { useQuery } from '@apollo/react-hooks';
+import { useSelector, useDispatch } from 'react-redux';
 import queryString from 'query-string';
-import { gql } from 'apollo-boost';
 import { FaGithub } from 'react-icons/fa';
+
+import { signInRequest } from '../../store/modules/auth/actions';
 
 import { Container } from './styles';
 
-const GET_BEARER_TOKEN = gql`
-  query($githubCode: String) {
-    getBearerToken(githubCode: $githubCode)
-  }
-`;
-
-export default function Auth({ history }) {
-  const { loading, data } = useQuery(GET_BEARER_TOKEN, {
-    variables: { githubCode: queryString.parse(history.location.search).code },
-  });
+export default function GithubCallback({ history }) {
+  const { name } = useSelector(state => state.user);
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!loading && data) {
-      const { getBearerToken: token } = data;
+    if (name) history.push('/');
+  }, [name, history]);
 
-      localStorage.setItem('@rocketvotes/token', token);
-      history.push('/');
-    }
-  }, [loading, data]);
+  useEffect(() => {
+    dispatch(
+      signInRequest({
+        code: queryString.parse(history.location.search).code,
+      })
+    );
+  }, [dispatch, history]);
 
   return (
     <Container>
